@@ -1,3 +1,15 @@
-<h2>Los autores de ésta práctica somos: Jesús Aparicio Oliver y Verónica González Pérez</h2>
-<img scr="../public/jesus.jpg" width="320" height="400"></img>
-<img scr="../public/imagenVeroValida.png" width="320" height="400"></img>
+<h2>Los autores de ésta práctica somos: Jesús Aparicio Oliver y Verónica González Pérez</h2><br>
+
+<style type="text/css">
+table {
+width:10%;
+margin: auto;
+}
+
+<table id="tabla" align="center">
+	<tr><td><img src="Jesus.jpg" width="80" heigth="200"></img></td>
+	    <td><img src="imagenVeroValida.png" width="80" heigth="100"></img></td>
+	    <td><video src="logo_de_Chrome.ogv" width="150" heigth="250" controls preload autoplay></video></td>
+        </tr>
+</table> 
+
