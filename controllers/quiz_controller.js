@@ -141,7 +141,3 @@ exports.destroy = function(req, res) {
 
 //  console.log("req.quiz.id: " + req.quiz.id);
 
-
-
-
-
