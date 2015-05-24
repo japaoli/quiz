@@ -1,4 +1,5 @@
 
+
 var models = require('../models/models.js');
 
 // MW que permite acciones solamente si el quiz objeto pertenece al usuario logeado o si es cuenta admin
@@ -49,20 +50,25 @@ exports.load = function(req,res,next,quizId){
 
 
 
-// GET /quizes
-// GET /users/:userId/quizes
-exports.index = function(req, res) {  
-  var options = {};
-  if(req.user){
-    options.where = {UserId: req.user.id}
-  }
-  
-  models.Quiz.findAll(options).then(
-    function(quizes) {
-      res.render('quizes/index.ejs', {quizes: quizes, errors: []});
-    }
+//GET /quizes
+exports.index = function(req,res){
+	var search = req.query.search;
+	if (search !== undefined){
+		search = search.replace(" ","%");
+		search = "%"+search+"%";
+	}
+	models.Quiz.findAll({where: ["pregunta like ?", search]}).then(function(quizes){
+		res.render('quizes/index.ejs',{quizes:quizes, errors: []});
+	}
   ).catch(function(error){next(error)});
 };
+
+
+
+
+
+
+
 
 
 // PUT /quizes/:id
@@ -167,4 +173,3 @@ exports.destroy = function(req, res) {
 };
 
 //  console.log("req.quiz.id: " + req.quiz.id);
-
