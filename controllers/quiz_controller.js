@@ -49,16 +49,18 @@ exports.load = function(req,res,next,quizId){
 
 
 
-//GET /quizes
-exports.index = function(req,res){
-	var search = req.query.search;
-	if (search !== undefined){
-		search = search.replace(" ","%");
-		search = "%"+search+"%";
-	}
-	models.Quiz.findAll({where: ["pregunta like ?", search]}).then(function(quizes){
-		res.render('quizes/index.ejs',{quizes:quizes, errors: []});
-	}
+// GET /quizes
+// GET /users/:userId/quizes
+exports.index = function(req, res) {  
+  var options = {};
+  if(req.user){
+    options.where = {UserId: req.user.id}
+  }
+  
+  models.Quiz.findAll(options).then(
+    function(quizes) {
+      res.render('quizes/index.ejs', {quizes: quizes, errors: []});
+    }
   ).catch(function(error){next(error)});
 };
 
