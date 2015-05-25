@@ -67,7 +67,6 @@ exports.index = function(req, res) {
   if(req.user){
     options.where = {UserId: req.user.id}
     options.include = {model: models.User, as: "Fans"}
-    //quizes.forEach(function(quiz) {quiz.isFav = quiz.Fans.some(function(fan){return fan.id == req.user.id})});
     models.Quiz.findAll({where: ["pregunta like ?", search]}, options).then(function(quizes) {
           res.render('quizes/index.ejs', {quizes: quizes, errors: []});
     }).catch(function(error){next(error)});
