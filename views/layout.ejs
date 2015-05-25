@@ -32,10 +32,12 @@
     
     <%if(session.user){%>
       <span><a href="/user/<%=session.user.id%>/quizes">Mis Preguntas</a></span>
+      <span><a id="bar" href="/user/<%=session.user.id%>/favourites">Favoritos</a></span>
     <%}%>
 
     <span><a href="/author">Creditos</a></span>
     <span><a id="bar" href="/quizes/statistics">Estadísticas</a></span> 
+    
   </nav>
 
   <section class="main" id="s1">

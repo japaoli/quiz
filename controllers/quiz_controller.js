@@ -56,6 +56,7 @@ exports.load = function(req,res,next,quizId){
 // GET /users/:userId/quizes
 exports.index = function(req, res) {  
   var options = {};
+  var favs = {};
   var search = req.query.search;
 
   if (search !== undefined){
@@ -65,13 +66,18 @@ exports.index = function(req, res) {
 
   if(req.user){
     options.where = {UserId: req.user.id}
+    options.include = {model: models.User, as: "Fans"}
+    //quizes.forEach(function(quiz) {quiz.isFav = quiz.Fans.some(function(fan){return fan.id == req.user.id})});
+    models.Quiz.findAll({where: ["pregunta like ?", search]}, options).then(function(quizes) {
+          res.render('quizes/index.ejs', {quizes: quizes, errors: []});
+    }).catch(function(error){next(error)});
   }
-  
-  models.Quiz.findAll({where: ["pregunta like ?", search]}, options).then(function(quizes) {
-      res.render('quizes/index.ejs', {quizes: quizes, errors: []});
-  }).catch(function(error){next(error)});
+  else{
+    models.Quiz.findAll({where: ["pregunta like ?", search]}, options).then(function(quizes) {
+					res.render('quizes/index.ejs', {quizes: quizes, errors: []});
+    }).catch(function(error){next(error)});
+  }
 };
-
 
 
 
@@ -176,5 +182,3 @@ exports.destroy = function(req, res) {
     res.redirect('/quizes');
   }).catch(function(error){next(error)});
 };
-
-//  console.log("req.quiz.id: " + req.quiz.id);
